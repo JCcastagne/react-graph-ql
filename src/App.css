@@ -1,0 +1,79 @@
+@-moz-viewport {
+  width: device-width;
+  scale: 1;
+}
+@-ms-viewport {
+  width: device-width;
+  scale: 1;
+}
+@-o-viewport {
+  width: device-width;
+  scale: 1;
+}
+@-webkit-viewport {
+  width: device-width;
+  scale: 1;
+}
+@viewport {
+  width: device-width;
+  scale: 1;
+}
+
+html {
+  box-sizing: border-box;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-smooth: auto;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: 1em;
+  font-weight: 400;
+}
+
+.button {
+  color: white;
+  background-color: rgb(41, 41, 41);
+  padding: 0.5em 2em;
+  border-radius: 9px;
+  width: auto;
+  display: flex;
+  display: inline-block;
+  box-shadow: 9px 9px 34px rgba(50, 50, 50, 0.28);
+}
+
+ul li {
+  list-style: none;
+}
+
+body {
+  margin: 1em 1.5em 1em 1em;
+}
+
+li {
+  margin: 1em 0;
+  padding: 0.25em;
+  border: 1px solid rgba(0, 0, 0, 0.42);
+  border-radius: 9px;
+}
+
+p {
+  margin: 0.5em;
+}
