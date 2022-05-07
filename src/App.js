@@ -29,7 +29,7 @@ function App () {
 
   `
 
-  function getData () {
+  async function getData () {
     console.log('received clicked')
 
     fetch(endpoint, {
@@ -39,11 +39,15 @@ function App () {
     })
       .then(response => response.json())
       .then(data => {
-        if (!data.pool) {
+        if (!data.data.pool) {
+          console.log(data.data.pool)
           alert('Please enter a valid pool/pair address')
         } else {
-          setChartData(data)
+          console.log(data.data)
+          setChartData(data.data)
         }
+
+        // setChartData(data)
       })
       .catch(err => {
         console.log(err)
@@ -90,13 +94,13 @@ function App () {
 
       <h2>
         {chartData &&
-          `${chartData && chartData.data.pool.token0.symbol} VS ${chartData &&
-            chartData.data.pool.token1.symbol}`}
+          `${chartData && chartData.pool.token0.symbol} VS ${chartData &&
+            chartData.pool.token1.symbol}`}
       </h2>
 
       <ul>
         {chartData &&
-          chartData.data.pool.poolHourData.map((item, index) => {
+          chartData.pool.poolHourData.map((item, index) => {
             return (
               <li key={index}>
                 <p>{item.token0Price}</p>
