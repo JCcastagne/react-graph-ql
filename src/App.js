@@ -13,6 +13,65 @@ function App () {
     '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'
   )
 
+  const [apexChartData, setApexChartData] = useState({
+    series: [
+      {
+        data: [
+          [1327359600000, 30.95],
+          [1327446000000, 31.34],
+          [1327532400000, 31.18],
+          [1327618800000, 31.05],
+          [1327878000000, 31.0],
+          [1327964400000, 30.95],
+          [1328050800000, 31.24],
+          [1328137200000, 31.29],
+          [1328223600000, 31.85],
+          [1328482800000, 31.86],
+          [1328569200000, 32.28]
+        ]
+      }
+    ],
+    options: {
+      chart: {
+        id: 'area-datetime',
+        type: 'area',
+        height: 350,
+        zoom: {
+          autoScaleYaxis: true
+        }
+      },
+      dataLabels: {
+        enabled: false
+      },
+      markers: {
+        size: 0,
+        style: 'hollow'
+      },
+      xaxis: {
+        type: 'datetime',
+        // min: new Date('01 Mar 2012').getTime(),
+        tickAmount: 6
+      },
+      tooltip: {
+        x: {
+          format: 'MM dd yyyy hh:mm'
+        },
+        y: {
+          enabled: false
+        }
+      },
+      fill: {
+        type: 'gradient',
+        gradient: {
+          shadeIntensity: 1,
+          opacityFrom: 0.7,
+          opacityTo: 0.9,
+          stops: [0, 100]
+        }
+      }
+    }
+  })
+
   let graphQuery = `
 {
   pool(id: "${contractAddress}") {
@@ -46,7 +105,7 @@ function App () {
           console.log(data.data.pool)
           alert('Please enter a valid pool/pair address')
         } else {
-          console.log(data.data)
+          // console.log(data.data)
           setChartData(data.data)
         }
 
@@ -62,13 +121,22 @@ function App () {
     return convertedDate.toLocaleString()
   }
 
-  // useEffect(() => {
-  //   chartData && console.log(chartData.data.pool.poolHourData)
-  // }, [chartData])
-
-  // useEffect(() => {
-  //   console.log(graphQuery)
-  // }, [graphQuery])
+  useEffect(() => {
+    if (chartData) {
+      let updatedSeries = []
+      chartData.pool.poolHourData.forEach(item => {
+        let tokenPrice = parseFloat(item.token0Price)
+        updatedSeries.push([item.periodStartUnix * 1000, tokenPrice.toFixed(2)])
+      })
+      let prevState = apexChartData
+      setApexChartData(prevState => ({
+        options: { ...prevState.options },
+        series: [{ data: updatedSeries }]
+      }))
+      // console.log(updatedSeries)
+      // console.log(apexChartData)
+    }
+  }, [chartData])
 
   return (
     <div className='App'>
@@ -100,6 +168,17 @@ function App () {
           `${chartData && chartData.pool.token0.symbol} VS ${chartData &&
             chartData.pool.token1.symbol}`}
       </h2>
+
+      <div id='chart'>
+        <div id='chart-timeline'>
+          <Chart
+            options={apexChartData.options}
+            series={apexChartData.series}
+            type='area'
+            height={350}
+          />
+        </div>
+      </div>
 
       <ul>
         {chartData &&
