@@ -1,5 +1,8 @@
-import { useEffect, useState } from 'react'
 import './App.css'
+
+import { useEffect, useState } from 'react'
+
+import Chart from 'react-apexcharts'
 
 let endpoint = `https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3`
 
