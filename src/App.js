@@ -7,7 +7,6 @@ import Chart from 'react-apexcharts'
 let endpoint = `https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3`
 
 function App () {
-  // useEffect(() => {}, [])
   const [chartData, setChartData] = useState()
   const [contractAddress, setContractAddress] = useState(
     '0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8'
@@ -60,13 +59,29 @@ function App () {
           enabled: false
         }
       },
+      stroke: {
+        curve: 'smooth',
+        colors: ['#c00f4d'],
+        width: 3
+      },
       fill: {
         type: 'gradient',
+        colors: ['#c00f4d', '#000'],
         gradient: {
           shadeIntensity: 1,
-          opacityFrom: 0.7,
-          opacityTo: 0.9,
-          stops: [0, 100]
+          opacityFrom: 0.66,
+          opacityTo: 0,
+          stops: [0, 500]
+        }
+      },
+      theme: {
+        mode: 'light',
+        palette: 'palette1',
+        monochrome: {
+          enabled: false,
+          color: '#00000',
+          shadeTo: 'dark',
+          shadeIntensity: 1
         }
       }
     }
