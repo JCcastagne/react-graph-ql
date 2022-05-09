@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 
 import Chart from 'react-apexcharts'
 
+//Uniswap - theGraph's API endpoint
 let endpoint = `https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3`
 
 function App () {
@@ -106,6 +107,10 @@ function App () {
 
   `
 
+  /**
+   * Ajax function to asynchronously fetch data to the endpoint using parameters from graphQuery.
+   * @returns void; simply pushes returned data into chartData
+   */
   async function getData () {
     console.log('received clicked')
 
@@ -120,22 +125,27 @@ function App () {
           console.log(data.data.pool)
           alert('Please enter a valid pool/pair address')
         } else {
-          // console.log(data.data)
           setChartData(data.data)
         }
-
-        // setChartData(data)
       })
       .catch(err => {
         console.log(err)
       })
   }
 
+  /**
+   * Sending a timestamp into this function returns a formatted date string.
+   * @param {uint} unixTime timestamp in unix time
+   * @returns {string} formatted date string (hh:mm:ss dd:mm:yyyy)
+   */
   function unixTimeConverter (unixTime) {
     let convertedDate = new Date(unixTime * 1000)
     return convertedDate.toLocaleString()
   }
 
+  /**
+   * When chart data is updated in chartData's state, this function listens to the data changed, formats it into an array and then pushes this data into apexChartData's series object.
+   */
   useEffect(() => {
     if (chartData) {
       let updatedSeries = []
